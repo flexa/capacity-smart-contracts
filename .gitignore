@@ -1,0 +1,14 @@
+
+# Envionment variables
+.env
+
+# Standard Truffle / Solidity ignores
+contracts/.placeholder
+test/.placeholder
+build
+node_modules
+
+# IntelliJ files
+*.iml
+.idea/
+.vscode/
