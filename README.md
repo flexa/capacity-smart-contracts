@@ -1,6 +1,10 @@
-# network-staking-contract
+# Capacity Smart Contracts
 
-Contains the Smart Contract source code for Flexa's staking wallet, allowing users to deposit FXC to be staked on the Flexa platform.
+Ethereum smart contracts supporting Flexa capacity wallets
+
+# Audit
+
+The contract code was [audited](https://github.com/trailofbits/publications/blob/master/reviews/Flexa.pdf) by [Trail of Bits](https://www.trailofbits.com/) over the course of two weeks in September 2019. Note that [root commit of this repository](https://github.com/flexahq/capacity-smart-contracts/commit/12ab417463516f62634659f76ee71648161894cb) contains the final version of the contract as referenced on page 26 of the audit report.
 
 # Requirements
 * [NodeJS](https://nodejs.org/en/download/)
@@ -11,7 +15,7 @@ In order to run the contracts locally,
 * Start the Truffle development console
 * Deploy the smart contracts
 ```javascript
-$ cd /path/to/network-staking-contract
+$ cd /path/to/capacity-smart-contracts
 $ npm install                   // Install the required NPM packages (truffle and openzeppelin-solidity for now)
 $ truffle compile               // compiles the smart contracts
 $ truffle develop               // starts the truffle development console, including a local blockchain
@@ -79,7 +83,7 @@ truffle(develop)> await staking.withdraw(account, 100, 1, [])
 # Automated Tests
 Tests are divided between unit tests and integration tests, which can be run with:
 ```javascript
-cd /path/to/network-staking-contract
+cd /path/to/capacity-smart-contracts
 truffle test
 ```
 
@@ -118,3 +122,6 @@ truffle(rinkeby)> balance.toString()
 > '1000000000000000000000000' // Initial supply of test FXC
 ```
 
+# License
+
+MIT
