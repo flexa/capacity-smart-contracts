@@ -26,7 +26,7 @@ contract("Staking - Setters", accounts => {
     describe("setWithdrawalPublisher", () => {
         it("should update publisher", async () => {
             const currentPublisher = await stakingContract._withdrawalPublisher();
-            const receipt = await stakingContract.setWithdrawalPublisher(accounts[3]);
+            const receipt = await stakingContract.setWithdrawalPublisher(accounts[4]);
             const newPublisher = await stakingContract._withdrawalPublisher();
 
             truffleAssert.eventEmitted(receipt, 'WithdrawalPublisherUpdate', (ev) => {
@@ -35,12 +35,12 @@ contract("Staking - Setters", accounts => {
             });
 
             assert.notEqual(currentPublisher, newPublisher, 'Publisher was not updated!');
-            assert.equal(newPublisher, accounts[3], "Publisher does not match account it was updated to!");
+            assert.equal(newPublisher, accounts[4], "Publisher does not match account it was updated to!");
         });
 
         it("should fail update if not owner", async () => {
             try {
-                await stakingContract.setWithdrawalPublisher(accounts[3], {from: accounts[1]});
+                await stakingContract.setWithdrawalPublisher(accounts[4], {from: accounts[1]});
                 assert(false, "This should have thrown");
             } catch(e) {
                 assert(
@@ -54,7 +54,7 @@ contract("Staking - Setters", accounts => {
     describe("setFallbackPublisher", () => {
         it("should update publisher", async () => {
             const currentPublisher = await stakingContract._fallbackPublisher();
-            const receipt = await stakingContract.setFallbackPublisher(accounts[3]);
+            const receipt = await stakingContract.setFallbackPublisher(accounts[4]);
             const newPublisher = await stakingContract._fallbackPublisher();
 
             truffleAssert.eventEmitted(receipt, 'FallbackPublisherUpdate', (ev) => {
@@ -63,16 +63,44 @@ contract("Staking - Setters", accounts => {
             });
 
             assert.notEqual(currentPublisher, newPublisher, 'Publisher was not updated!');
-            assert.equal(newPublisher, accounts[3], "Publisher does not match account it was updated to!");
+            assert.equal(newPublisher, accounts[4], "Publisher does not match account it was updated to!");
         });
 
         it("should fail update if not owner", async () => {
             try {
-                await stakingContract.setFallbackPublisher(accounts[3], {from: accounts[1]});
+                await stakingContract.setFallbackPublisher(accounts[4], {from: accounts[1]});
                 assert(false, "This should have thrown");
             } catch(e) {
                 assert(
                     e.message.includes("Only the owner can set the fallback publisher address"),
+                    `Error thrown does not match exepcted error ${e.message}`
+                );
+            }
+        });
+    });
+
+    describe("setImmediatelyWithdrawableLimitPublisher", () => {
+        it("should update publisher", async () => {
+            const currentPublisher = await stakingContract._immediatelyWithdrawableLimitPublisher();
+            const receipt = await stakingContract.setImmediatelyWithdrawableLimitPublisher(accounts[4]);
+            const newPublisher = await stakingContract._immediatelyWithdrawableLimitPublisher();
+
+            truffleAssert.eventEmitted(receipt, 'ImmediatelyWithdrawableLimitPublisherUpdate', (ev) => {
+                return ev.oldValue === currentPublisher && 
+                    ev.newValue === newPublisher;
+            });
+
+            assert.notEqual(currentPublisher, newPublisher, 'Publisher was not updated!');
+            assert.equal(newPublisher, accounts[4], "Publisher does not match account it was updated to!");
+        });
+
+        it("should fail update if not owner", async () => {
+            try {
+                await stakingContract.setImmediatelyWithdrawableLimitPublisher(accounts[4], {from: accounts[1]});
+                assert(false, "This should have thrown");
+            } catch(e) {
+                assert(
+                    e.message.includes("Only the owner can set the immediately withdrawable limit publisher address"),
                     `Error thrown does not match exepcted error ${e.message}`
                 );
             }

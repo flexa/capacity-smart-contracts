@@ -426,6 +426,28 @@ contract Staking {
     }
 
     /**
+     * @notice Updates the Immediately Withdrawable Limit Publisher address, the only address
+     * other than the owner that can set the immediately withdrawable limit.
+     * @param newImmediatelyWithdrawableLimitPublisher The address of the new Immediately
+     * Withdrawable Limit Publisher
+     */
+    function setImmediatelyWithdrawableLimitPublisher(
+      address newImmediatelyWithdrawableLimitPublisher
+    ) external {
+        require(
+            msg.sender == _owner,
+            "Only the owner can set the immediately withdrawable limit publisher address"
+        );
+        address oldValue = _immediatelyWithdrawableLimitPublisher;
+        _immediatelyWithdrawableLimitPublisher = newImmediatelyWithdrawableLimitPublisher;
+
+        emit ImmediatelyWithdrawableLimitPublisherUpdate(
+          oldValue,
+          _immediatelyWithdrawableLimitPublisher
+        );
+    }
+
+    /**
      * @notice Modifies the immediately withdrawable limit (the maximum amount that
      * can be withdrawn from withdrawal authorization roots before the limit needs
      * to be updated by Flexa) by the provided amount.
